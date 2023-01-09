@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Props</h1> 
+    <h3>App.js</h3>
+    <pre>
+import React from 'react';
+import ComponentA from './Components/ComponentA';
+
+const App = () => {
+  const Name = "Bhanu"
+
+  return (
+    < div className='App'> < div >
+      < h1>from App.js {Name} </ h1> < h1 >
+      < ComponentA Name={Name}/>
+    </ div> < div >
+  );
+}
+
+export default App;
+    </pre>
+
+
+    <h3>Components/ComponentsA folder</h3>
+
+    <pre>
+import React from 'react';
+
+function ComponentA( {Name}) {
+    
+    return (
+        <div> from ComponentA: {Name} </div>
+               
+    );
+}
+export default ComponentA;
+    </pre>
+    <hr>
+    <h1>Context API</h1>
+    <h3>App.js</h3>
+    <pre>
+        import React from 'react';
+        import ComponentA from './Components/ComponentA';
+        import { createContext } from 'react';
+        
+        const data = createContext();
+        
+        const App = () => {
+          const Name = "Prasad"
+        
+          return (
+            < div className='App'>
+              < h1>from App.js: {Name}</ h1>  < h1 >
+              < data.Provider value={Name}> 
+              < ComponentA/>
+              </ data.Provider>
+            </ div> < div >
+          );
+        }
+        
+        export default App;
+        export {data};
+            
+    </pre>
+
+
+    <h3>Components/ComponentsA folder</h3>
+<pre>
+    import React from 'react';
+    import ComponentB from './ComponentB';
+    
+    
+    const ComponentA = () => {
+        return (
+            < div>from ComponentA: 
+            < ComponentB/>    
+            </ div> < div >
+        );
+    }
+    
+    export default ComponentA;
+</pre>
+
+<h3>Components/ComponentsB folder</h3>
+
+<pre>
+    import React from 'react';
+    import { useContext } from 'react';
+    import {data} from './../App';
+    
+    function ComponentB()  {
+        const Nameone = useContext(data);
+        
+        return (
+            < div> from ComponentB:{Nameone}
+                
+            </ div> < div >
+        );
+    }
+    
+    export default ComponentB;
+</pre>
+<hr>
+
+<h1>UseMemo</h1>
+<h3>App.js</h3>
+<pre>
+    import React from 'react';
+    import useMemo from './Components/useMemo'
+    
+    const App = () => {
+      return (
+        < div className="App">  < div  >
+          < h1>Hello</ h1>  < h1 >
+          < useMemo/>
+        </ div> < div >
+      );
+    }
+    
+    export default App;
+</pre>
+
+<h3>Components/UseMemofile/UseMemo folder</h3>
+<pre>
+    import React, { useState, useMemo } from "react";
+
+
+    function useMemo () {
+        console.log("Main function")
+        const [add, setAdd] = useState(0)
+        const [sub, setSub] = useState(0)
+        const Multiplication= useMemo(function Multiplication(){
+            console.log("Multiplication run")
+            return add*10;
+    
+        
+        },[add])
+    
+        return (
+            < div>coming from Multiplication: 
+                {Multiplication}
+                < h1>{add}</ h1> < h1 >
+                < button onClick={()=>setAdd(add+1)}>Add</ button>  < button >  < br />
+                < h1>{sub}</ h1>  < h1 >
+                < button onClick={()=>setSub(sub-1)}>sub</ button> < button > < br />
+            </ div> < div >
+        );
+    }
+    
+    export default useMemo;
+</pre>
+<hr>
+<h1>Fetch API or Mapping</h1>
+<h3>App.js</h3>
+<pre>
+    import React from 'react';
+    import FetchApi from './Components/FetchApi';
+    
+    const App = () => {
+      return (
+        < div>
+          < FetchApi/>
+        </ div>  < div
+      );
+    }
+    
+    export default App;    
+</pre>
+<h3>Components/FetchApi folder</h3>
+<pre>
+    import React, { useEffect, useState } from 'react'
+
+    export default function FetchApi() {
+        const [data , setData] = useState("");
+        useEffect(()=>{
+            fetch('https://jsonplaceholder.typicode.com/users')
+            .then(Response => Response.json())
+            .then(json => {setData(json)
+                console.log(json);
+            })
+            .catch((err)=>console.log('err'))  
+        },[])
+    
+      return (
+        < div>
+            < h1>This Is Mapping</ h1> < h1
+            {
+                data && data.map((value) =>{ 
+                    return(
+                        < div>
+                            {value.name}
+                        </ div> div
+                    )
+                })
+            }
+        </ div> div
+      )
+    }
+</pre>
+<hr>
+
+<h1>useState Count</h1>
+<h3>App.js</h3>
+<pre>
+    import {useState } from "react"
+    import './App.css';
+    
+    function App() {
+      const[value,setValue]=useState(0)
+    
+      const increment=()=>{
+      setValue(value+1)
+      console.log(value)
+      }
+      const decrement=()=>{
+        setValue(value-1)
+        }
+      
+    
+    
+      return (
+        < div className="App">
+         < h1>{value}</ h1>
+         < button onClick={increment}>Increment</ button> button> <br/> <br/>
+         < button onClick={decrement}>Decrement</ button> button>
+    </ div> div
+      );
+    }
+    
+    export default App;
+</pre>
+<hr>
+
+<h1>UseState HOOk Number</h1>
+<h3>App.js</h3>
+<pre>
+    import React from 'react';
+    import Hello from './Components/Hello';
+    
+    const App = () => {
+      return (
+        < div>
+          < Hello/>
+          
+        </ div > < div >
+      );
+    }
+    
+    export default App;    
+</pre>
+<h3>Components/Hello folder</h3>
+<pre>
+    import React from 'react';
+    import {useState } from "react"
+    
+    const Hello = () => {
+        const [Number, setNumber] = useState(10)
+        const updateNumber= ()=> {
+            setNumber(Number*10)
+        }
+        return (
+            < div>
+              < h1> Numbers : {Number}</ h1>  < h1 >
+              < button onClick={updateNumber}>Click</ button> < button > 
+                
+            </ div> < div >
+        );
+    }
+    
+    export default Hello;
+</pre>
+<hr>
+
+<h1>useEffect Hook</h1>
+<h3>App.js</h3>
+<pre>
+    import React from 'react';
+    import UseEffectfile from './Components/useEffectfile';
+    
+    
+    const App = () => {
+      return (
+        < div>
+          < UseEffectfile/>
+        </ div> < div >
+      );
+    }
+    
+    export default App;
+</pre>
+<h3>Components/useeffectfile folder</h3>
+<pre>
+    import React, { useEffect, useState} from 'react';
+
+    const UseEffectfile = () => {
+        const [name, setName]=useState("Bhanu prasad");
+    
+        useEffect(()=>{
+            setName(name)
+            console.log(name)
+        }, [name])
+        return (
+            < div>
+                < h1 >Hello {name}</ h1 > < h1 >
+            </ div > < div >
+        );
+    }
+    
+    export default UseEffectfile;
+</pre>
+<hr>
+<h1>Chatgpt usestate</h1>
+<h3>App.js</h3>
+<pre>
+    import { useState } from 'react';
+
+    const App = () => {
+      const [count, setCount] = useState(0);
+      return (
+        < div>
+          < p>You clicked {count} times</ p > < p >
+          < button  onClick={() => setCount(count + 1)}>
+            Click me</ button> < button >
+        </ div> < div > 
+      );
+    }
+    
+    export default App;
+</pre>
+
+
+</body>
+</html>
